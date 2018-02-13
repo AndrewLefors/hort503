@@ -33,10 +33,11 @@ def get_read():
         sequences in the FASTQ file then this function returns False.
     :rtype: a list with four elements
     """
+    count = 0
     for record in SeqIO.parse(fq_in, "fastq"):
         print("ID:%s\nSequence:%s\nDescription:%s\nQuality Score:%s" % (record.id, record.seq, record.description, record.letter_annotations['phred_quality']))
-        break
-
+        count += 1
+    print(f"%i Reads Found in {fq_in}" % count)
 
 def read_trimmer():
     """Trims the low quality nucleotides from the front of a reads' sequences.
@@ -85,7 +86,7 @@ def lenght_check():
         else:
             reject += 1
     SeqIO.write(final_reads, fq_out, "fastq")
-    print("%i Reads were found\n%i Reads were removed\n%i Reads were trimmed and kept" % ((passed + reject), reject, passed))
+    print("%i Reads were removed\n%i Reads were trimmed and kept" % (reject, passed))
 
 def main():
     """The main function of this script.
