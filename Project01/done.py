@@ -6,9 +6,10 @@
       that control trimming. A new FASTQ file is generated containing only
       trimmed reads that meet the given requirements.
 
-.. moduleauthor:: Andrew J. Lefors
+.. moduleauthor:: ENTER YOUR NAME HERE
 
 """
+
 from Bio import SeqIO
 from sys import argv
 import os
@@ -17,7 +18,7 @@ reads = SeqIO.parse(fq_in, "fastq")
 trimmed_reads = SeqIO.parse("tmp", "fastq")
 good_reads = []
 final_reads = []
-read_reads = []
+
 def get_read():
     """Extract a single read from a FASTQ file.
 
@@ -33,13 +34,13 @@ def get_read():
         sequences in the FASTQ file then this function returns False.
     :rtype: a list with four elements
     """
-    count = 0
-    for record in SeqIO.parse(fq_in, "fastq"):
-        print("ID:%s\nSequence:%s\nDescription:%s\nQuality Score:%s" % (record.id, record.seq, record.description, record.letter_annotations['phred_quality']))
-        count += 1
-    print(f"%i Reads Found in {fq_in}" % count)
+    for record in get_read:
+        print(f"Openining {fq_in} for reading...")
+        print("ID:%s" % record.id, "\nSequence:%s" % record.seq, "\nDescription:%s" % record.description, "\nQuality Score:%s" % record.letter_annotations["phred_quality"])
+        break
 
-def read_trimmer():
+
+def trim_read_front():
     """Trims the low quality nucleotides from the front of a reads' sequences.
 
     This function examines the quality score of each nucleotide sequence
@@ -65,8 +66,6 @@ def read_trimmer():
        desired minimum read length then this function returns False.
     :rtype: a list with four elements
     """
-    #This section filters reads based on quality score, appends to list only record
-    #with leading base quality score >= min_q
     for record in reads:
         a = 0
         quality = record.letter_annotations['phred_quality']
@@ -78,7 +77,7 @@ def read_trimmer():
                 a += 1
     SeqIO.write(good_reads, "tmp", "fastq")
 
-#This section Filters Reads based on min_length
+      #This section filters trimmed reads based on sequence length
     passed = 0
     reject = 0
     for record in trimmed_reads:
@@ -88,8 +87,12 @@ def read_trimmer():
         else:
             reject += 1
     SeqIO.write(final_reads, fq_out, "fastq")
-    print("%i Reads were removed\n%i Reads were trimmed and kept" % (reject, passed))
+    print("%i Reads were found\n%i Reads were removed\n%i Reads were trimmed and kept" % ((passed + reject), reject, passed))
 
+
+#
+# The main function for the script.
+#
 def main():
     """The main function of this script.
 
@@ -112,10 +115,18 @@ def main():
        - An integer indicating how large a read's nucleotide sequence must
          be after trimming in order to keep it.
     """
-    print("Reading File...")
-    get_read()
-    read_trimmer()
-    print("Trimming File...")
-    os.remove("tmp")
-    print("Done.")
+    #get_read(reads)
+    trim_read_front()
+    #This section counts the number of passed and failed reads and reports it to std.out
+    orig = 0
+    passed = 0
+    for record in reads:
+        orig += 1
+    for record in final_reads:
+        passed += 1
+    print("%i Original Reads\n%i Trimmed\n%i Failed Quality Control" % (orig, passed, (orig - passed))
+
+
+
+# Begin the program by calling the main function.
 main()
