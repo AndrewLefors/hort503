@@ -1,6 +1,0 @@
-#This is an in-class design session for Hort503 DataScience
-class Organism(object):
-    Prokaryote = 0
-    Eukaryote = 1
-    input(int()"0 = Prokaryote, 1 = Eukaryote") = nucleus
-    print(nucleus)

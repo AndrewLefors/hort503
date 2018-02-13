@@ -1,8 +1,0 @@
-from Bio import SeqIO
-from sys import argv
-script, input_fq, output_fq, min_q, min_size = argv
-
-def get_read(fq)
-    print(fq)
-fq_input = input_fq
-get_read(fq_input)
