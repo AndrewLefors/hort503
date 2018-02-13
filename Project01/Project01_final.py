@@ -33,8 +33,8 @@ def get_read():
         sequences in the FASTQ file then this function returns False.
     :rtype: a list with four elements
     """
-    for record in reads:
-        print(record)
+    for record in SeqIO.parse(fq_in, "fastq"):
+        print("ID:%s\nSequence:%s\nDescription:%s\nQuality Score:%s" % (record.id, record.seq, record.description, record.letter_annotations['phred_quality']))
         break
 
 
@@ -110,7 +110,7 @@ def main():
          be after trimming in order to keep it.
     """
     print("Reading File...")
-    #get_read()
+    get_read()
     read_trimmer()
     print("Trimming File...")
     lenght_check()
