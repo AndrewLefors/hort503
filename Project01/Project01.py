@@ -37,7 +37,8 @@ def get_read():
     for record in SeqIO.parse(fq_in, "fastq"):
         print("ID:%s\nSequence:%s\nDescription:%s\nQuality Score:%s" % (record.id, record.seq, record.description, record.letter_annotations['phred_quality']))
         count += 1
-    print(f"%i Reads Found in {fq_in}" % count)
+        break
+    print(f"%i Reads read from {fq_in}" % count)
 
 def read_trimmer():
     """Trims the low quality nucleotides from the front of a reads' sequences.
@@ -114,8 +115,12 @@ def main():
     """
     print("Reading File...")
     get_read()
-    read_trimmer()
+    count = 0
+    for record in SeqIO.parse(fq_in, "fastq"):
+        count += 1
+    print(f"%i Reads found in {fq_in}" % count)
     print("Trimming File...")
+    read_trimmer()
     os.remove("tmp")
     print("Done.")
 main()
