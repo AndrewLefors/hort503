@@ -1,0 +1,42 @@
+This workflow takes all protien files and breaks them into batches of 5000 sequences and runs them agaianst a user-defined database using blastp. 
+Then, the batches are saved into individual tab-delimited files with the following columns: 
+0.	Query accession
+1.	Subject accession
+2.	Subject title
+3.	Percent identity
+4.	Alignment length
+5.	Number of mismatches
+6.	Number of gap openings
+7.	Start of alignment in query
+8.	End of alignment in query
+9.	Start of alignment in subject
+10.	End of alignment in subject
+11.	Expect value
+12.     Bitscore
+
+Another tab-delimited file will be generated from all of the results with two columns:
+0. Query ID
+1. Number of Hits
+
+This workflow uses Nextflow, requiring Java. 
+This workflow also uses python3.
+
+To reproduce the final results for the OryzaSativa all.pep file, change the params.query variable to the absolute path to your protein file.
+
+For the protein database, change the params.db variable to the absolute path of your database.
+
+To change the batch size, you can change the params.chunkSize variable. Default is 5000.
+
+This workflow is designed to be used on HPC, primarily Kamiak @ WSU, but can be used locally or with any other HPC system. 
+
+You must have the two python scripts in the directory you are staging the program in: 
+nextflow_python_batch.py
+nextflow_python_wrangle.py
+
+the main script is:
+nf_process.nf
+
+the Kamiak SLURM submission script is:
+nextflow_sub.slurm
+
+
