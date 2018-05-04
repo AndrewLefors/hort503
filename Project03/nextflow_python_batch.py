@@ -16,7 +16,7 @@ names = ["Query ID",
          "Expect Value",
          "Bitscore"]
 ##Take File from blast-nextflow output and drop all columns except qseqid and nident
-new_file = pd.read_table('Blast', header=None, names=names)
+new_file = pd.read_table('blastp_result', header=None, names=names)
 new_file_1 = new_file[["Query Accession",
          "Subject Accession",
          "Subject Title",
@@ -30,6 +30,6 @@ new_file_1 = new_file[["Query Accession",
          "End of Alignment Subject",
          "Expect Value",
          "Bitscore"]]
-new_file_1.to_csv('Batch-results.txt', sep="\t) 
+new_file_1.to_csv('Blast', sep="\t) 
                                                           1,1           Top
 
