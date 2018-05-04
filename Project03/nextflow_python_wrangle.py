@@ -16,7 +16,7 @@ names = ["Query ID",
          "Expect Value",
          "Bitscore"]
 ##Take File from blast-nextflow output and drop all columns except qseqid and nident
-new_file = pd.read_table('blast_result.txt', header=None, names=names)
+new_file = pd.read_table('top_results', header=None, names=names)
 new_file_1 = new_file[["Query ID","Number of Matches"]]
 
 #Sort the File for top hits first by setting ascending=False in the sort method
